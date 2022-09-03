@@ -9,7 +9,8 @@ const loadCategories = (categories) => {
    
     const categoriesContainer = document.getElementById('categories-container');
    
-    categories.forEach(category => {
+  categories.forEach(category => {
+  
         const liCategories = document.createElement('ul');
         liCategories.innerHTML =`
         <li onClick="loadMenus('${category.category_id}')" class="list-unstyled list-items">${category.category_name}</li>
@@ -17,14 +18,9 @@ const loadCategories = (categories) => {
         
         categoriesContainer.appendChild(liCategories);
       
-        // console.log(category.news_category);
-      //  console.log(category);
-
-      const noFoundPhones = document.getElementById('display-no-message');
-
-       
+      
     }) 
-   toggleSpinner(false);
+    toggleSpinner(true);
 }
 
  // Toggle spinner function...
@@ -57,9 +53,20 @@ const loadMenus=async(category_id) => {
   }
   
 const displayMenus = (menus) => {
-  toggleSpinner(true);
+  toggleSpinner(false);
 
- 
+  const displayText = document.getElementById('display-message');
+ /*  const postRow = document.createElement('p'); */
+
+  displayText.innerText = menus.length;
+  if (menus.length===1) {
+    displayText.parentNode.classList.add('d-none');
+   
+  }
+  else {
+    
+    displayText.parentNode.classList.remove('d-none'); 
+  } 
 
 
     const postContainer = document.getElementById('post-container');
@@ -78,7 +85,7 @@ const displayMenus = (menus) => {
               <div class="col-md-8 ">
                     <div class="card-body">
                         <h5 class="card-title fw-bolder">${menu.title}</h5>
-                        <p class="card-text text-secondary"> <small>${menu.details.slice(0,300)}...</small></p>
+                        <p class="card-text text-secondary "> <small>${menu.details.slice(0,300)}...</small></p>
                 
                     </div>
                     <div class="d-flex">
@@ -120,12 +127,7 @@ const displayMenus = (menus) => {
   
     })
  
-  /*   if ( menus.length=== 0) {
-      noFoundPhones.classList.remove('d-none');
-    }
-    else {
-      noFoundPhones.classList.add('d-none');
-  }   */
+
   console.log(menus.length);
 }
 
