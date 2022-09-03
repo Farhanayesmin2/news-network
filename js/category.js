@@ -21,11 +21,11 @@ const loadCategories = (categories) => {
       //  console.log(category);
        
     }) 
-  // toggleSpinner(false);
+   toggleSpinner(false);
 }
 
  // Toggle spinner function...
-/* const toggleSpinner = isLoading => {
+ const toggleSpinner = isLoading => {
     const loaderSpinner = document.getElementById('loader');
   
     if (isLoading) {
@@ -34,7 +34,7 @@ const loadCategories = (categories) => {
     else {
       loaderSpinner.classList.add('d-none');
     }
-  }  */
+  }  
 
 
 
@@ -54,10 +54,11 @@ const loadMenus=async(category_id) => {
   }
   
 const displayMenus= (menus) => {
-   // toggleSpinner(true);
+    toggleSpinner(true);
     const postContainer = document.getElementById('post-container');
    postContainer.innerHTML="";
-    menus.forEach(menu => {
+  menus.forEach(menu => {
+
         const postRow = document.createElement('div');
         postRow.classList.add('row');
         postRow.innerHTML =`
@@ -70,22 +71,67 @@ const displayMenus= (menus) => {
               <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title fw-bolder">${menu.title}</h5>
-                        <p class="card-text text-secondary text-muted"> <small>The five main principles of UX design. We've broken them down into five main concepts: Empathy, strategy, usability, inclusivity, and validation.</small></p>
-                        <p  class=" card-text text-info fw-bold">Price:98$</p>
+                        <p class="card-text text-secondary "> <small>${menu.details}</small></p>
+                       
                     </div>
+                    <button onClick="loadViewDetails('${menu._id}')" class="btn btn-info shadow-lg p-2 mb-4 text-bold bg-body text-info border-info border border-3 rounded" data-bs-toggle="modal" data-bs-target="#modalDetail">Show Details</button>
+                   
               </div>
          </div>
        </div>
      </div>
         `;
-        postContainer.appendChild(postRow);
-        console.log(menu);
+      postContainer.appendChild(postRow);
+      
+
+    console.log(menu);
     })
    
 }
 
+// View details
+
+ const loadViewDetails = async news_id => {
+  const url = `https://openapi.programming-hero.com/api/news/${news_id}`;
+  console.log(url);
+  const res = await fetch(url);
+  const data = await res.json();
+  loadViewDetailsDisplay(data.data);
+}
+const loadViewDetailsDisplay = viewall => {
+  const modalTitle = document.getElementById('modalDetailLabel');
+  modalTitle.textContent = '';
+  for (const view of viewall) {
+    modalTitle.innerText =view.title;
+
+    const modalBody = document.getElementById('modal-body-detail');
+  modalBody.innerText = 'Hello';
+  // console.log(phone);
+  console.log(view)
+  }
+
+ 
+  
+  
+  
+}
+   
+/*   }) */
 
 
 
 
-/*  */
+
+/*  <img src="${phone.image}" alt="">
+  <p>Realse Date: ${phone.releaseDate ? phone.releaseDate : 'No Realse Date Found.'}</p>
+  <h2>Phone Details: </h2>
+
+ <p> DisplaySize:${phone.mainFeatures.displaySize} </p>
+ <p> Memory: ${phone.mainFeatures.memory}  </p>
+  Storage:${phone.mainFeatures.storage}
+  </p>
+  <h3>Other Details: </h3>
+  <p>Bluetooth: ${phone.others ? phone.others.bluetooth : 'No Bluetooth information Found.'}</p>
+  
+  
+   <button onClick="loadViewDetails('${menu.category_id}')" class="btn btn-info shadow-lg">View Details </button>*/
