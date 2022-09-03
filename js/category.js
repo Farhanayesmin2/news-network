@@ -19,6 +19,9 @@ const loadCategories = (categories) => {
       
         // console.log(category.news_category);
       //  console.log(category);
+
+      const noFoundPhones = document.getElementById('display-no-message');
+
        
     }) 
    toggleSpinner(false);
@@ -53,8 +56,12 @@ const loadMenus=async(category_id) => {
        
   }
   
-const displayMenus= (menus) => {
-    toggleSpinner(true);
+const displayMenus = (menus) => {
+  toggleSpinner(true);
+
+ 
+
+
     const postContainer = document.getElementById('post-container');
    postContainer.innerHTML="";
   menus.forEach(menu => {
@@ -65,28 +72,61 @@ const displayMenus= (menus) => {
         <div class="col-lg-12 col-sm-12 container" > 
         <div class="card mb-3 border border-primary shadow-lg rounded-4">
             <div class="row g-0 ">
-               <div class="col-md-4">
-                 <img src="${menu.thumbnail_url}" alt="...">
+               <div class="col-md-4 ">
+                 <img class="menu-thumbnail" src="${menu.thumbnail_url}" alt="...">
              </div>
-              <div class="col-md-8">
+              <div class="col-md-8 ">
                     <div class="card-body">
                         <h5 class="card-title fw-bolder">${menu.title}</h5>
-                        <p class="card-text text-secondary "> <small>${menu.details}</small></p>
-                       
+                        <p class="card-text text-secondary"> <small>${menu.details.slice(0,300)}...</small></p>
+                
                     </div>
-                    <button onClick="loadViewDetails('${menu._id}')" class="btn btn-info shadow-lg p-2 mb-4 text-bold bg-body text-info border-info border border-3 rounded" data-bs-toggle="modal" data-bs-target="#modalDetail">Show Details</button>
-                   
+                    <div class="d-flex">
+
+  <div class="px-3 d-flex align-items-center justify-content-start">
+    <img class="rounded-circle author-img" src="${menu.author.img}" alt="">
+    <div>
+      <h6 class="pt-3">${menu.author.name ? menu.author.name : 'Author not Found.' }</h6>
+      <p> ${menu.author.published_date ? menu.author.published_date : 'Date not found.'  }<p>
+    </div>
+  </div>
+   <div class="d-flex align-items-center justify-content-between ">
+   <div class="px-3">
+      <i class="bi bi-eye-fill"></i>
+      <span>${menu.total_view ? menu.total_view : 'Not Found.' }K<span>
+      </div>
+      <div class="px-5">
+    <span >${menu.rating.number}</span>
+      <i class="bi bi-star-fill "></i>
+      <i class="bi bi-star-fill"></i>
+      <i class="bi bi-star-fill"></i>
+      <i class="bi bi-star-fill"></i>
+      <i class="bi bi-star-half"></i>
+      </div>
+    <div class="pt-3" >
+       <button onClick="loadViewDetails('${menu._id}')" class="btn btn-info shadow-lg p-2 mb-4 text-bold bg-body text-info border-info border border-3 rounded" data-bs-toggle="modal" data-bs-target="#modalDetail">Show Details</button>  
+  </div>
+  </div>
+         
               </div>
          </div>
        </div>
      </div>
         `;
       postContainer.appendChild(postRow);
-      
+    menu.details.slice(0, 300);
 
-    console.log(menu);
+    console.log(menu.details.length);
+  
     })
-   
+ 
+  /*   if ( menus.length=== 0) {
+      noFoundPhones.classList.remove('d-none');
+    }
+    else {
+      noFoundPhones.classList.add('d-none');
+  }   */
+  console.log(menus.length);
 }
 
 // View details
@@ -105,33 +145,29 @@ const loadViewDetailsDisplay = viewall => {
     modalTitle.innerText =view.title;
 
     const modalBody = document.getElementById('modal-body-detail');
-  modalBody.innerText = 'Hello';
+  modalBody.innerHTML= ` <div>
+  <img class="menu-thumbnail" src="${view.image_url}" alt="...">
+  
+   
+
+  <p class="card-text text-secondary "> <small>${view.details}</small></p>
+
+</div>
+<div class="d-flex align-items-center justify-content-between ">
+<div class="px-3 ">
+   <i class="bi bi-eye-fill"></i>
+   <span>${view.total_view ? view.total_view : 'Not Found.' }<span>
+   
+   </div>
+   <h6 class="pt-3">Author:${view.author.name ? view.author.name : 'Author not Found.' }</h6>
+   </div>
+ 
+   `;
   // console.log(phone);
   console.log(view)
   }
-
- 
-  
-  
-  
 }
-   
-/*   }) */
 
 
 
 
-
-/*  <img src="${phone.image}" alt="">
-  <p>Realse Date: ${phone.releaseDate ? phone.releaseDate : 'No Realse Date Found.'}</p>
-  <h2>Phone Details: </h2>
-
- <p> DisplaySize:${phone.mainFeatures.displaySize} </p>
- <p> Memory: ${phone.mainFeatures.memory}  </p>
-  Storage:${phone.mainFeatures.storage}
-  </p>
-  <h3>Other Details: </h3>
-  <p>Bluetooth: ${phone.others ? phone.others.bluetooth : 'No Bluetooth information Found.'}</p>
-  
-  
-   <button onClick="loadViewDetails('${menu.category_id}')" class="btn btn-info shadow-lg">View Details </button>*/
