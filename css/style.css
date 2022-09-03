@@ -1,0 +1,6 @@
+.list-items:hover{
+ background-color: rgb(240, 250, 250);
+ /* color: rgb(2, 27, 252); */
+ color: rgb(13,202,240) ;
+ padding: 5px;   
+}
