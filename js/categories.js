@@ -116,8 +116,10 @@ const loadCategoryNewsDisplay = (menus) => {
         <i class="bi bi-star-fill"></i>
         <i class="bi bi-star-half"></i>
         </div>
-   <div>
-   <button type="button" class="btn btn-white border-info text-info" onclick="loadModal('${menu._id}')"  data-bs-toggle="modal" data-bs-target="#exampleModal">Show More</button>
+   <div class="pt-3">
+   <button onclick="loadModal('${menu._id}')" class="btn btn-info shadow-lg p-2 mb-4 text-bold bg-body text-info border-info border border-3 rounded" data-bs-toggle="modal" data-bs-target="#exampleModal">Show Details</button>
+
+   
         </div>
           `;
     postContainer.appendChild(postRow);
@@ -143,7 +145,7 @@ const loadModal = async (news_id) => {
 const displayModalItems = (newsDetails) => {
     const modalBody = document.getElementById('modalDisplay');
     const modalTitle = document.getElementById('exampleModalLabel');
-  
+    modalBody.textContent = '';
     newsDetails.forEach(view => {
         modalTitle.innerText=view.title;
        // console.log(view.title);
