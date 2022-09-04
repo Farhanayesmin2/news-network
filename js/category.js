@@ -10,7 +10,7 @@ const loadCategories = (categories) => {
     const categoriesContainer = document.getElementById('categories-container');
    
   categories.forEach(category => {
-  
+
         const liCategories = document.createElement('ul');
         liCategories.innerHTML =`
         <li onClick="loadMenus('${category.category_id}')" class="list-unstyled list-items">${category.category_name}</li>
@@ -20,7 +20,7 @@ const loadCategories = (categories) => {
       
       
     }) 
-    toggleSpinner(true);
+   
 }
 
  // Toggle spinner function...
@@ -38,7 +38,7 @@ const loadCategories = (categories) => {
 
 
 const loadMenus=async(category_id) => {
-    
+  toggleSpinner(true)
     const url2 = `https://openapi.programming-hero.com/api/news/category/${category_id}`
     console.log(url2);
     const res = await fetch(url2);
@@ -48,12 +48,12 @@ const loadMenus=async(category_id) => {
      /*  fetch(url)
           .then(res => res.json())
           .then(data => displayPhones(data.data)); */
-        
-       
+          
+         
   }
-  
+ 
 const displayMenus = (menus) => {
-  toggleSpinner(false);
+ 
 
   const displayText = document.getElementById('display-message');
  /*  const postRow = document.createElement('p'); */
@@ -69,7 +69,8 @@ const displayMenus = (menus) => {
   } 
 
 
-    const postContainer = document.getElementById('post-container');
+  const postContainer = document.getElementById('post-container');
+
    postContainer.innerHTML="";
   menus.forEach(menu => {
 
@@ -85,7 +86,7 @@ const displayMenus = (menus) => {
               <div class="col-md-8 ">
                     <div class="card-body">
                         <h5 class="card-title fw-bolder">${menu.title}</h5>
-                        <p class="card-text text-secondary "> <small>${menu.details.slice(0,300)}...</small></p>
+                        <p class="card-text text-secondary "> <small>${menu.details.length >300 ? menu.details.slice(0,300)+'...' : menu.details}</small></p>
                 
                     </div>
                     <div class="d-flex">
@@ -127,8 +128,8 @@ const displayMenus = (menus) => {
   
     })
  
-
-  console.log(menus.length);
+    toggleSpinner(false);
+    
 }
 
 // View details
